@@ -22,3 +22,12 @@ def _reciprocal_rank_fusion(lists:list[list[dict]])->list[dict]:
     return [
         {**item[row] ,"score":item["score"]} for item in fused
     ]
+
+
+async def hybrid_retrieve(repo_id:int,query:str,candidate_pool_size:int=20)->list[dict]:
+    query_embedding=await embed_query(query)
+    vector_results=await vector_search(repo_id,query_embedding,candidate_pool_size)
+    keyword_results=keyword_search(repo_id,query,candidate_pool_size)
+
+    fused=_reciprocal_rank_fusion([vector_results,keyword_results])
+    return fused[:candidate_pool_size]
