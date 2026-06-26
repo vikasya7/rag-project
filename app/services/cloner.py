@@ -17,7 +17,7 @@ def clone_repo(github_url:str)->str:
     the local path. Caller is responsible for cleanup via cleanup_repo()."""
      temp_dir=tempfile.mkdtemp(prefix="responage_")
      try:
-          git.Repo.clone(github_url,temp_dir,depth=1)
+          git.Repo.clone_from(url=github_url, to_path=temp_dir, multi_options=["--depth=1"])
      except git.exc.GitCommandError as e:
           shutil.rmtree(temp_dir,ignore_errors=True)
           raise CloneError(f"Failed to clone {github_url}: {e}")

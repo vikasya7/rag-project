@@ -55,7 +55,7 @@ async def store_chunk(repo_id: int, chunk, embedding: list[float]) -> None:
            DO UPDATE SET content = EXCLUDED.content, embedding = EXCLUDED.embedding, indexed_at = now()""",
         repo_id, chunk.file_path, chunk.start_line, chunk.end_line,
         chunk.language, chunk.symbol_name, chunk.symbol_type, chunk.content,
-        json.dumps(embedding),
+        str(embedding),
     )
 
 

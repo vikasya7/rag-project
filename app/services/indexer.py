@@ -27,9 +27,13 @@ async def run_indexing_job(repo_id: int, github_url: str) -> None:
                 all_chunks.extend(chunk_file(file_path))
             print(f"Produced {len(all_chunks)} chunks")
 
+            print("Starting embedding...")
             embedded = await embed_chunks(all_chunks)
-            for chunk, embedding in embedded:
-                await store_chunk(repo_id, chunk, embedding)
+            print(f"Embedding done, got {len(embedded)} results")
+            print("Starting store...")
+            for i, (chunk, embedding) in enumerate(embedded):
+               print(f"Storing chunk {i}")
+               await store_chunk(repo_id, chunk, embedding)
 
             await update_repo_status(repo_id, "ready", chunk_count=len(embedded))
             print(f"Indexed {len(embedded)} chunks for repo {repo_id}")
