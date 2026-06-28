@@ -19,9 +19,9 @@ import tree_sitter_javascript
 import tree_sitter_typescript
 from tree_sitter import Language, Parser
 
-PY_LANGUAGE   = Language(tree_sitter_python.language())
-JS_LANGUAGE   = Language(tree_sitter_javascript.language())
-TS_LANGUAGE   = Language(tree_sitter_typescript.language_typescript())
+PY_LANGUAGE   = Language(tree_sitter_python.language(), "python")
+JS_LANGUAGE   = Language(tree_sitter_javascript.language(), "javascript")
+TS_LANGUAGE   = Language(tree_sitter_typescript.language_typescript(), "typescript")
 
 
 def get_parser(language: str) -> Parser:
