@@ -27,7 +27,7 @@ export default function RepoInput({ onIndexed }: RepoInputProps) {
 
     // Poll GET /status every 2 seconds until ready or failed
     const interval = setInterval(async () => {
-      const statusRes = await fetch(`http://localhost:8000/status/${repoId}`);
+      const statusRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/status/${repoId}`);
       const statusData = await statusRes.json();
 
       if (statusData.status === "ready") {
