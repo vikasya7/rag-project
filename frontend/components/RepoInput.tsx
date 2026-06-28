@@ -17,7 +17,7 @@ export default function RepoInput({ onIndexed }: RepoInputProps) {
     setMessage("Starting indexing...");
 
     // Call POST /index
-    const res = await fetch("http://localhost:8000/index", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/index`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ github_url: url }),

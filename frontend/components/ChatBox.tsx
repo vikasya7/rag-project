@@ -34,7 +34,7 @@ export default function ChatBox({ repoId }: ChatBoxProps) {
     setCurrentAnswer("");
     setCurrentSources([]);
 
-    const response = await fetch("http://localhost:8000/ask", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repo_id: repoId, question: q }),
