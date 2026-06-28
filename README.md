@@ -83,6 +83,32 @@ Answer with file:line citations
 
 
 
+
+```mermaid
+flowchart TD
+    A[User pastes GitHub URL\nPOST /index] --> B[Clone repo\nGitPython, shallow depth=1]
+    B --> C[Walk source files\n.ts .tsx .js .jsx .py]
+    C --> D[AST-aware chunking\ntree-sitter, one chunk per function/class]
+    D --> E[Embed chunks\nOpenAI text-embedding-3-small]
+    E --> F[(Postgres + pgvector\nvector index + tsvector full-text)]
+
+    G[User asks a question\nPOST /ask] --> H[Vector search\nsemantic top 20]
+    G --> I[Keyword search\nPostgres full-text top 20]
+    H --> J[Reciprocal Rank Fusion\nmerge both result sets]
+    I --> J
+    J --> K[Cohere rerank\ncross-encoder top 5]
+    K --> L[GPT-4o-mini\nstreamed response]
+    L --> M[SSE tokens to frontend\nfile:line citations]
+
+    F --> H
+    F --> I
+
+    style A fill:#374151,color:#f9fafb
+    style G fill:#374151,color:#f9fafb
+    style F fill:#6b21a8,color:#f9fafb
+    style M fill:#065f46,color:#f9fafb
+```
+
 ---
 
 ## Tech stack
