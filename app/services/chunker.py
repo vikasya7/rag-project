@@ -14,7 +14,25 @@ there's no separate compilation step needed for each language binding.
 
 from dataclasses import dataclass
 from pathlib import Path
-from tree_sitter_languages import get_parser
+import tree_sitter_python
+import tree_sitter_javascript
+import tree_sitter_typescript
+from tree_sitter import Language, Parser
+
+PY_LANGUAGE   = Language(tree_sitter_python.language())
+JS_LANGUAGE   = Language(tree_sitter_javascript.language())
+TS_LANGUAGE   = Language(tree_sitter_typescript.language_typescript())
+
+
+def get_parser(language: str) -> Parser:
+    parser = Parser()
+    if language == "python":
+        parser.set_language(PY_LANGUAGE)
+    elif language == "javascript":
+        parser.set_language(JS_LANGUAGE)
+    elif language in ("typescript",):
+        parser.set_language(TS_LANGUAGE)
+    return parser
 
 
 CHUNK_NODE_TYPES = {
